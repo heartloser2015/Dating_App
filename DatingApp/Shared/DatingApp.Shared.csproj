@@ -1,0 +1,16 @@
+﻿    <Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Domin\BaseDominmodel\**" />
+    <EmbeddedResource Remove="Domin\BaseDominmodel\**" />
+    <None Remove="Domin\BaseDominmodel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+</Project>

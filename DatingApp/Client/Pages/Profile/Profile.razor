@@ -1,0 +1,76 @@
+﻿@page "/profile/"
+@inject HttpClient _client 
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Profile</h3>
+
+@if (Users == null)
+{
+    <p><em>Loading User Profile...</em></p>
+}
+else
+{
+    <table class="table">
+         <thead>
+                <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Gender Preference</th>
+                <th>location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var User in Users)
+            {
+                <tr>
+                    <td>@User.username</td>
+                    <td>@User.email</td>
+                    <td>@User.password</td>
+                    <td>@User.gender</td>
+                    <td>@User.Birth</td>
+                    <td>@User.Status</td>
+                    <td>@User.GenderP</td>
+                    <td>@User.Location</td>
+                    <td>
+                        <a href="match/view/@User.Id" class="btn btn-primary">
+                            <span class ="oi oi-book"></span>
+                        </a>
+                        <a href="match/view/@User.Id" class="btn btn-warning">
+                            <span class ="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(User.Id))">
+                            <span class ="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+       </tbody>
+    </table>
+}   
+
+
+@code {
+	private List<User> Users;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.ProfileEndPoint}");
+	}
+
+	async Task Delete(int makeId)
+	{
+		var make = Users.First(q => q.Id == makeId);
+		var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {make.username}? ");
+		if(confirm)
+		{
+			await _client.DeleteAsync($"{Endpoints.ProfileEndPoint}/{makeId}");
+			await OnInitializedAsync();
+		}
+	}
+
+}
+

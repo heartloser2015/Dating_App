@@ -1,0 +1,66 @@
+﻿@page "/messages/"
+@inject HttpClient _client 
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Messages</h3>
+@if (Messages == null)
+{
+    <p><em>Loading messages...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>LastSeen</th>
+                <th>Last Read</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Message in Messages)
+            {
+                <tr>
+                    <td>@Message.Id</td>
+                    <td>@Message.Message_content</td>
+                    <td>@Message.Message_timestamp</td>
+                    <td>@Message.Message_read</td>
+                    <td>
+                        <a href="match/view/@Message.Id" class="btn btn-primary">
+                            <span class ="oi oi-book"></span>
+                        </a>
+                        <a href="match/view/@Message.Id" class="btn btn-warning">
+                            <span class ="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Message.Id))">
+                            <span class ="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}   
+
+
+@code {
+	private List<Message> Messages;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndPoint}");
+	}
+
+	async Task Delete(int makeId)
+	{
+		var make = Messages.First(q => q.Id == makeId);
+		var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {make.Id}? ");
+		if(confirm)
+		{
+			await _client.DeleteAsync($"{Endpoints.MessagesEndPoint}/{makeId}");
+			await OnInitializedAsync();
+		}
+	}
+
+}
