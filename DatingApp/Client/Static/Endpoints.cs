@@ -11,7 +11,7 @@ namespace DatingApp.Client.Static
 
         public static readonly string MatchEndPoint = $"{Prefix}/match";
         public static readonly string MembershipEndPoint = $"{Prefix}/membership";
-        public static readonly string MessagesEndPoint = $"{Prefix}/messages";
+        public static readonly string MessagesEndPoint = $"{Prefix}/message";
         public static readonly string PaymentEndPoint = $"{Prefix}/payment";
         public static readonly string ProfileEndPoint = $"{Prefix}/profile";
     }
