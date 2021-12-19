@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DatingApp.Server.Migrations
 {
-    public partial class iopt : Migration
+    public partial class handsomes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -347,12 +347,20 @@ namespace DatingApp.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Location",
                 columns: new[] { "Id", "Location_Gps", "User_IdId" },
-                values: new object[] { 1, "Black", null });
+                values: new object[,]
+                {
+                    { 1, "Black", null },
+                    { 2, "Blue", null }
+                });
 
             migrationBuilder.InsertData(
-                table: "Location",
-                columns: new[] { "Id", "Location_Gps", "User_IdId" },
-                values: new object[] { 2, "Blue", null });
+                table: "Message",
+                columns: new[] { "Id", "Match_IdId", "Message_content", "Message_read", "Message_timestamp" },
+                values: new object[,]
+                {
+                    { 1, null, "joey number 1", "Read", new DateTime(2021, 12, 19, 20, 58, 51, 317, DateTimeKind.Local).AddTicks(1254) },
+                    { 2, null, "joey number 2", "Not Read", new DateTime(2021, 12, 19, 20, 58, 51, 320, DateTimeKind.Local).AddTicks(1895) }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

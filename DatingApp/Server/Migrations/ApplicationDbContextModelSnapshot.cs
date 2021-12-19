@@ -188,6 +188,22 @@ namespace DatingApp.Server.Migrations
                     b.HasIndex("Match_IdId");
 
                     b.ToTable("Message");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Message_content = "joey number 1",
+                            Message_read = "Read",
+                            Message_timestamp = new DateTime(2021, 12, 19, 20, 58, 51, 317, DateTimeKind.Local).AddTicks(1254)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Message_content = "joey number 2",
+                            Message_read = "Not Read",
+                            Message_timestamp = new DateTime(2021, 12, 19, 20, 58, 51, 320, DateTimeKind.Local).AddTicks(1895)
+                        });
                 });
 
             modelBuilder.Entity("DatingApp.Shared.Domin.Notify", b =>

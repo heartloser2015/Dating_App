@@ -33,8 +33,9 @@ namespace DatingApp.Server.Data
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new LocationSeedConfiguration());
-           
-            
+            builder.ApplyConfiguration(new MessageSeedConfiguration());
+
+
         }
     }
 }

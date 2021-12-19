@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211218163758_iopt")]
-    partial class iopt
+    [Migration("20211219125854_handsomes")]
+    partial class handsomes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -190,6 +190,22 @@ namespace DatingApp.Server.Migrations
                     b.HasIndex("Match_IdId");
 
                     b.ToTable("Message");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Message_content = "joey number 1",
+                            Message_read = "Read",
+                            Message_timestamp = new DateTime(2021, 12, 19, 20, 58, 51, 317, DateTimeKind.Local).AddTicks(1254)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Message_content = "joey number 2",
+                            Message_read = "Not Read",
+                            Message_timestamp = new DateTime(2021, 12, 19, 20, 58, 51, 320, DateTimeKind.Local).AddTicks(1895)
+                        });
                 });
 
             modelBuilder.Entity("DatingApp.Shared.Domin.Notify", b =>
